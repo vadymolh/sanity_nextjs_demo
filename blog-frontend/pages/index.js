@@ -2,8 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
+import PostListTest from '../Components/PostListTest';
 
-export default function Home() {
+const Home =  ()=> {
   const [name, setName] = useState('Defaulty');
   const [age, setAge] = useState(11);
   const [posts, setPosts] = useState([
@@ -14,10 +15,14 @@ export default function Home() {
   const handleClick = (name, e) =>{
     console.log('clicked by ' + name, e.target);
   }
+  const handleDelete = (id) =>{
+      const updatedPosts = posts.filter(post => post.id !== id);
+      setPosts(updatedPosts);
+  }
 
   useEffect(() => {
-    console.log('useEffect');
-  });
+    console.log('useEffect called');
+  }, [age]);
   
   return (
     <div className={styles.container}>
@@ -27,14 +32,11 @@ export default function Home() {
        }
       }>ClickME</button>
        <p>Hello {name} you are {age}</p>
-
-       {posts.map((post) =>(
-          <div className={styles.card} key={post.id}>
-            <h2>{ post.title }</h2>
-            <p>{ post.content }</p>
-          </div>
-       ) )}
+      <PostListTest posts={posts} handleDelete={handleDelete}/>
+       
 
     </div>
       )
 }
+
+export default Home;
