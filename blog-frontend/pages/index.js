@@ -4,19 +4,16 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
 import PostListTest from '../Components/PostListTest';
 
-const Home =  ()=> {
+const Home =  (posts_)=> {
   const [name, setName] = useState('Defaulty');
   const [age, setAge] = useState(11);
-  const [posts, setPosts] = useState([
-    {id:1, title: 'Post 1', content: 'Content 1'},
-    {id:2, title: 'Post 2', content: 'Content 2'},
-    {id:3, title: 'Post 3', content: 'Content 3'},]);
+  const [posts, setPosts] = useState(posts_);
 
   const handleClick = (name, e) =>{
     console.log('clicked by ' + name, e.target);
   }
   const handleDelete = (id) =>{
-      const updatedPosts = posts.filter(post => post.id !== id);
+      const updatedPosts = posts.filter(post => post._id !== id);
       setPosts(updatedPosts);
   }
 
@@ -38,5 +35,30 @@ const Home =  ()=> {
     </div>
       )
 }
+
+
+export const getServerSideProps = async (pageContext)=>{
+  
+  const query = encodeURIComponent(`*[_type == "post"]{title, _id, slug}`);
+  const url = `https://f1gl4ktq.api.sanity.io/v1/data/query/production?query=${query}`;
+  
+  const res = await fetch(url).then(data => data.json());
+  const posts = res.result;
+  //console.log(posts.posts_);
+  if (!posts) {
+      return { 
+          notFound: true
+       };
+  }
+  
+  return {
+      props: {
+          posts_: posts,
+          
+      }
+  }
+};
+
+
 
 export default Home;
