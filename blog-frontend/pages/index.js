@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
 import PostListTest from '../Components/PostListTest';
+import Toolbar from '../Components/Toolbar';
 
 const Home =  (posts_)=> {
   const [name, setName] = useState('Defaulty');
@@ -30,9 +31,8 @@ const Home =  (posts_)=> {
       }>ClickME</button>
        <p>Hello {name} you are {age}</p>
       <PostListTest posts={posts} handleDelete={handleDelete}/>
-       
-
     </div>
+    
       )
 }
 
