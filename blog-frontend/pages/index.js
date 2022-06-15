@@ -4,11 +4,14 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
 import PostListTest from '../Components/PostListTest';
 import Toolbar from '../Components/Toolbar';
+import imageUrlBuilder from '@sanity/image-url'
 
-const Home =  (posts_)=> {
+const Home =  ({posts_})=> {
   const [name, setName] = useState('Defaulty');
   const [age, setAge] = useState(11);
   const [posts, setPosts] = useState(posts_);
+
+  const [mappedPosts, setMappedPosts] = useState([]);
 
   const handleClick = (name, e) =>{
     console.log('clicked by ' + name, e.target);
@@ -17,20 +20,28 @@ const Home =  (posts_)=> {
       const updatedPosts = posts.filter(post => post._id !== id);
       setPosts(updatedPosts);
   }
+  console.log("TEST1",posts_);
 
   useEffect(() => {
-    console.log('useEffect called');
-  }, [age]);
+    const imgBuilder = imageUrlBuilder({
+      projectId: 'f1gl4ktq',
+      dataset: 'production'
+    });
+    console.log("TEST",posts_);
+    if (posts_){
+      setMappedPosts(posts_.map(p=>{
+        return {...p, 
+              mainImage: imgBuilder.image(p.mainImage).width(500).height(250)}
+      }))
+    } 
+     }, []);
   
   return (
     <div className={styles.container}>
        <h2>Homepage</h2>
-       <button onClick={(e)=> {setAge(age+1);
-       setName("Vadym");
-       }
-      }>ClickME</button>
+       
        <p>Hello {name} you are {age}</p>
-      <PostListTest posts={posts} handleDelete={handleDelete}/>
+      <PostListTest posts={mappedPosts} handleDelete={handleDelete}/>
     </div>
     
       )
