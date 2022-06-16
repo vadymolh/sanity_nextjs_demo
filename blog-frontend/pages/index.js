@@ -50,7 +50,7 @@ const Home =  ({posts_})=> {
 
 export const getServerSideProps = async (pageContext)=>{
   
-  const query = encodeURIComponent(`*[_type == "post"]{title, _id, slug}`);
+  const query = encodeURIComponent(`*[_type == "post"]`); //{title, _id, slug}
   const url = `https://f1gl4ktq.api.sanity.io/v1/data/query/production?query=${query}`;
   
   const res = await fetch(url).then(data => data.json());
