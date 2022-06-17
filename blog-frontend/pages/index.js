@@ -5,8 +5,11 @@ import { useState, useEffect } from 'react';
 import PostListTest from '../Components/PostListTest';
 import Toolbar from '../Components/Toolbar';
 import imageUrlBuilder from '@sanity/image-url'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const Home =  ({posts_})=> {
+  const {data: session} = useSession();
+
   const [name, setName] = useState('Defaulty');
   const [age, setAge] = useState(11);
   const [posts, setPosts] = useState(posts_);
@@ -31,17 +34,24 @@ const Home =  ({posts_})=> {
     if (posts_){
       setMappedPosts(posts_.map(p=>{
         return {...p, 
-              mainImage: imgBuilder.image(p.mainImage).width(500).height(250)}
+              mainImage: imgBuilder.image(p.mainImage).width(800).height(500)}
       }))
     } 
      }, []);
   
   return (
-    <div className={styles.container}>
-       <h2>Homepage</h2>
-       
-       <p>Hello {name} you are {age}</p>
-      <PostListTest posts={mappedPosts} handleDelete={handleDelete}/>
+    <div className={styles.main}>
+       {!session && (<button onClick={()=>signIn()}>
+        Sign In
+       </button>)}
+       {session && (
+        <>
+         <h1>Welcome to Blog!</h1>
+         <h3>Rescent published:</h3>
+         <PostListTest posts={mappedPosts} handleDelete={handleDelete}/>
+        </>)
+       }
+      
     </div>
     
       )
