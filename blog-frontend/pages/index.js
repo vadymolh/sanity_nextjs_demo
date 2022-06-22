@@ -24,6 +24,7 @@ const Home =  ({posts_})=> {
       setPosts(updatedPosts);
   }
   console.log("TEST1",posts_);
+  console.log("SESSIONindex",session);
 
   useEffect(() => {
     const imgBuilder = imageUrlBuilder({

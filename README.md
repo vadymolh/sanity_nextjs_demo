@@ -9,3 +9,7 @@ Now you can do the following things:
 - [Read the blog post about this template](https://www.sanity.io/blog/build-your-own-blog-with-sanity-and-next-js?utm_source=readme)
 - [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
 - [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+
+
+268860003885-m2ga3om545v4t0i0p4kvf3jqhgav2map.apps.googleusercontent.com
+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

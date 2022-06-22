@@ -1,9 +1,16 @@
 import styles from '../styles/Toolbar.module.css'
 import Link from 'next/link'
+import { signIn, signOut, useSession } from 'next-auth/react'
+
 
 export const Toolbar = () => {
+    const {data: session} = useSession();
+    console.log("SESSION",session);
     return (
         <div className={styles.main}>
+            <div>
+                {session && (<button onClick={() => signOut()}>Sign out</button>)}
+            </div>
             <div>
                 <Link href="/">
                 <a>Home</a>
