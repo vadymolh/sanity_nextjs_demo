@@ -25,6 +25,8 @@ const Home =  ({posts_})=> {
   }
   console.log("TEST1",posts_);
   console.log("SESSIONindex",session);
+  if (session){console.log("UserIS:", session.user);}
+  
 
   useEffect(() => {
     const imgBuilder = imageUrlBuilder({
@@ -47,7 +49,7 @@ const Home =  ({posts_})=> {
        </button>)}
        {session && (
         <>
-         <h1>Welcome to Blog!</h1>
+         <h1>Welcome to Blog {session.user.name}!</h1>
          <h3>Rescent published:</h3>
          <PostListTest posts={mappedPosts} handleDelete={handleDelete}/>
         </>)
